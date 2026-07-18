@@ -1,0 +1,32 @@
+RAG Chatbot — Sample Knowledge Base Article
+
+What is Retrieval-Augmented Generation?
+Retrieval-Augmented Generation (RAG) is a technique that combines a retrieval
+system with a large language model. Instead of relying only on what the model
+learned during training, RAG first searches an external knowledge base for
+relevant information, then passes that information to the model as context
+before it generates an answer. This grounds responses in real, up-to-date
+source material and reduces hallucination.
+
+How this project implements RAG
+1. Ingestion: documents (PDF, TXT, Markdown) are loaded and split into
+   overlapping chunks using a recursive character text splitter.
+2. Embedding: each chunk is converted into a vector using an embedding model
+   and stored in a FAISS vector index on disk.
+3. Retrieval: when a user asks a question, the question is embedded and the
+   most similar chunks are retrieved from the FAISS index.
+4. Generation: the retrieved chunks are inserted into a prompt along with the
+   question and sent to a chat model, which produces a grounded answer and
+   cites which source chunks it used.
+
+Why use a vector database
+Traditional keyword search struggles with paraphrased or conceptually related
+queries. Vector search compares meaning rather than exact words, so a
+question like "how do I reset my password" can match a document chunk titled
+"account recovery steps" even though the wording is different.
+
+Extending this project
+Common extensions include swapping FAISS for a managed vector database like
+Pinecone or Weaviate, adding authentication per user/session, streaming
+responses token-by-token, and adding a feedback loop where users can flag
+incorrect answers to improve future retrieval.
