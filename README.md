@@ -141,6 +141,3 @@ pytest
 - Stream answers token-by-token over SSE/WebSockets
 - Add a feedback endpoint to flag incorrect answers and improve retrieval
 
-## License
-
-MIT
